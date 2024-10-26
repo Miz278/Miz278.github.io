@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>喵大師來開運 - 發現你的幸運貓咪</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        /* 全局樣式 */
+        body {
+            font-family: "微軟正黑體", Arial, sans-serif;
+            background-color: #ffe6f2; /* 淡粉色背景 */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #fff; /* 白色背景 */
+            padding: 20px 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        h2.subtitle {
+            text-align: center;
+            color: #6a6a6a;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        /* 按鈕樣式 */
+        .btn {
+            display: inline-block;
+            background-color: #ff99cc;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            background-color: #ff80b3;
+        }
+
+        /* 表單樣式 */
+        label {
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 6px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 12px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* 進度條樣式 */
+        #progress-bar {
+            width: 100%;
+            background-color: #e6e6e6;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #progress {
+            width: 0%;
+            height: 10px;
+            background-color: #ff99cc;
+            transition: width 0.3s ease;
+        }
+
+        /* 問題區域樣式 */
+        #question-container h2 {
+            font-size: 18px;
+            color: #4a4a4a;
+            margin-bottom: 10px;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .option-label {
+            display: block;
+            margin: 10px 0;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: background-color 0.2s ease;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .option-label:hover {
+            background-color: #ffe6f2;
+        }
+
+        .option-label input {
+            margin-right: 8px;
+        }
+
+        /* 結果區域樣式 */
+        #result {
+            text-align: center;
+            padding: 20px;
+        }
+
+        #result h2 {
+            color: #4a4a4a;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        #result p {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* 分享按鈕樣式 */
+        .share-buttons {
+            margin-top: 20px;
+        }
+
+        .share-buttons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 14px;
+            color: #ff99cc;
+            text-decoration: none;
+        }
+
+        .share-buttons a:hover {
+            text-decoration: underline;
+        }
+
+        /* 響應式設計 */
+        @media screen and (max-width: 768px) {
+            .btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2.subtitle {
+                font-size: 16px;
+            }
+
+            #result h2 {
+                font-size: 20px;
+            }
+
+            .container {
+                padding: 15px 15px;
+            }
+
+            input, select {
+                font-size: 10px;
+            }
+
+            label {
+                font-size: 12px;
+            }
+
+            .option-label {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>喵大師來開運</h1>
+        <h2 class="subtitle">結合貓咪、象棋卜卦與生命靈數，發現你的幸運之道！</h2>
+        <!-- 使用者資訊表單 -->
+        <div id="user-info">
+            <form id="userInfoForm">
+                <label for="userName">你的姓名：</label><br>
+                <input type="text" id="userName" name="userName" required><br>
+
+                <label for="userBirthday">你的生日：</label><br>
+                <input type="date" id="userBirthday" name="userBirthday" required><br>
+
+                <label for="userEmail">你的信箱：</label><br>
+                <input type="email" id="userEmail" name="userEmail" required><br>
+
+                <label for="userPhone">你的電話：</label><br>
+                <input type="tel" id="userPhone" name="userPhone" required><br>
+
+                <label for="catNumber">你養了幾隻貓咪？</label><br>
+                <input type="number" id="catNumber" name="catNumber" min="0" required><br>
+
+                <label for="catSource">你的貓咪是領養還是購買的？</label><br>
+                <select id="catSource" name="catSource" required>
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="領養">領養</option>
+                    <option value="購買">購買</option>
+                    <option value="尚未養貓">尚未養貓</option>
+                </select><br>
+
+                <div style="text-align: center;">
+                    <a href="javascript:void(0);" class="btn" onclick="startQuiz()">開始測驗</a>
+                </div>
+            </form>
+        </div>
+        <!-- 測驗區域 -->
+        <div id="quiz" style="display: none;">
+            <div id="progress-bar">
+                <div id="progress"></div>
+            </div>
+            <form id="quizForm">
+                <!-- 問題區域 -->
+                <div id="question-container">
+                    <!-- 問題將由JavaScript動態插入 -->
+                </div>
+                <!-- 按鈕區域 -->
+                <div id="button-container" style="text-align: center; margin-top: 20px;">
+                    <a href="javascript:void(0);" class="btn" id="prevButton" onclick="prevQuestion()" style="display: none;">上一題</a>
+                    <a href="javascript:void(0);" class="btn" id="nextButton" onclick="nextQuestion()">下一題</a>
+                    <a href="javascript:void(0);" class="btn" id="submitButton" onclick="calculateResult()" style="display: none;">揭曉結果</a>
+                </div>
+            </form>
+        </div>
+        <!-- 結果顯示區域 -->
+        <div id="result" style="display: none;">
+            <h2>你的幸運貓咪是...</h2>
+            <div id="result-content">
+                <!-- 結果將由JavaScript動態插入 -->
+            </div>
+            <!-- 分享按鈕 -->
+            <div class="share-buttons">
+                <p>分享你的結果：</p>
+                <a href="#" onclick="shareResult()">分享結果</a>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="javascript:void(0);" class="btn" onclick="restartQuiz()">再測一次</a>
+                <a href="javascript:void(0);" class="btn" onclick="shareTest()">分享測驗</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript代碼
+
+        const questions = [
+            // 12道問題，結合貓咪、象棋卜卦和生命靈數
+            {
+                question: "問題 1：如果你是一枚象棋棋子，你希望是哪一種？",
+                options: [
+                    { text: "A. 車 - 力量與速度", value: "短毛貓" },
+                    { text: "B. 馬 - 靈活與變化", value: "波斯貓" },
+                    { text: "C. 象 - 穩重與防守", value: "英國短毛貓" },
+                    { text: "D. 士 - 輔助與守護", value: "緬因貓" },
+                    { text: "E. 將 - 領導與決策", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇最符合你個性的棋子。"
+            },
+            {
+                question: "問題 2：以下哪個生命靈數最能代表你？",
+                options: [
+                    { text: "A. 1 - 獨立自主", value: "短毛貓" },
+                    { text: "B. 2 - 協調合作", value: "緬因貓" },
+                    { text: "C. 3 - 創意樂觀", value: "波斯貓" },
+                    { text: "D. 4 - 勤奮踏實", value: "英國短毛貓" },
+                    { text: "E. 5 - 自由冒險", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇你最有感覺的數字。"
+            },
+            {
+                question: "問題 3：你喜歡的貓咪活動是？",
+                options: [
+                    { text: "A. 捕捉玩具", value: "短毛貓" },
+                    { text: "B. 慵懶睡覺", value: "波斯貓" },
+                    { text: "C. 爬高觀察", value: "緬因貓" },
+                    { text: "D. 依偎主人", value: "英國短毛貓" },
+                    { text: "E. 獨自探險", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇你最喜歡的活動。"
+            },
+            {
+                question: "問題 4：如果你有一個願望，你希望是？",
+                options: [
+                    { text: "A. 擁有無限精力", value: "短毛貓" },
+                    { text: "B. 享受美食美景", value: "波斯貓" },
+                    { text: "C. 環遊世界", value: "俄羅斯藍貓" },
+                    { text: "D. 家庭幸福美滿", value: "英國短毛貓" },
+                    { text: "E. 成為專業領域的專家", value: "緬因貓" }
+                ],
+                hint: "選擇你最想實現的願望。"
+            },
+            {
+                question: "問題 5：你在團隊中通常扮演什麼角色？",
+                options: [
+                    { text: "A. 行動派，帶領大家前進", value: "短毛貓" },
+                    { text: "B. 創意者，提供新點子", value: "波斯貓" },
+                    { text: "C. 支持者，協助他人", value: "英國短毛貓" },
+                    { text: "D. 分析者，提供建議", value: "緬因貓" },
+                    { text: "E. 探險家，尋找新機會", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇最符合你的角色。"
+            },
+            {
+                question: "問題 6：你最喜歡以下哪種顏色？",
+                options: [
+                    { text: "A. 紅色 - 熱情與活力", value: "短毛貓" },
+                    { text: "B. 紫色 - 神秘與浪漫", value: "波斯貓" },
+                    { text: "C. 藍色 - 平靜與智慧", value: "緬因貓" },
+                    { text: "D. 綠色 - 成長與希望", value: "英國短毛貓" },
+                    { text: "E. 黑色 - 優雅與深沉", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇你最喜歡的顏色。"
+            },
+            {
+                question: "問題 7：你更傾向於哪種生活方式？",
+                options: [
+                    { text: "A. 忙碌但充實", value: "短毛貓" },
+                    { text: "B. 悠閒且舒適", value: "波斯貓" },
+                    { text: "C. 規律且有計劃", value: "英國短毛貓" },
+                    { text: "D. 自由且多變", value: "俄羅斯藍貓" },
+                    { text: "E. 專注於興趣愛好", value: "緬因貓" }
+                ],
+                hint: "選擇你偏好的生活方式。"
+            },
+            {
+                question: "問題 8：你認為朋友對你來說是？",
+                options: [
+                    { text: "A. 一起冒險的夥伴", value: "俄羅斯藍貓" },
+                    { text: "B. 生活的調味劑", value: "波斯貓" },
+                    { text: "C. 支持與信任", value: "英國短毛貓" },
+                    { text: "D. 學習與成長的對象", value: "緬因貓" },
+                    { text: "E. 一起行動的團隊", value: "短毛貓" }
+                ],
+                hint: "選擇最符合你想法的選項。"
+            },
+            {
+                question: "問題 9：你在面對挑戰時的態度是？",
+                options: [
+                    { text: "A. 迎難而上", value: "短毛貓" },
+                    { text: "B. 審慎評估再行動", value: "緬因貓" },
+                    { text: "C. 尋求他人協助", value: "英國短毛貓" },
+                    { text: "D. 以樂觀的態度面對", value: "波斯貓" },
+                    { text: "E. 視為成長的機會", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇你的應對方式。"
+            },
+            {
+                question: "問題 10：以下哪種貓咪特質你最喜歡？",
+                options: [
+                    { text: "A. 好奇心強", value: "短毛貓" },
+                    { text: "B. 優雅高貴", value: "波斯貓" },
+                    { text: "C. 溫順親人", value: "英國短毛貓" },
+                    { text: "D. 獨立自主", value: "緬因貓" },
+                    { text: "E. 聰明機智", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇你最喜歡的特質。"
+            },
+            {
+                question: "問題 11：你最喜歡的季節是？",
+                options: [
+                    { text: "A. 春天 - 萬物復甦", value: "英國短毛貓" },
+                    { text: "B. 夏天 - 熱情洋溢", value: "短毛貓" },
+                    { text: "C. 秋天 - 豐收與感恩", value: "緬因貓" },
+                    { text: "D. 冬天 - 寧靜與思考", value: "俄羅斯藍貓" },
+                    { text: "E. 我喜歡每個季節", value: "波斯貓" }
+                ],
+                hint: "選擇你最喜歡的季節。"
+            },
+            {
+                question: "問題 12：你覺得哪種環境最適合你？",
+                options: [
+                    { text: "A. 熱鬧的城市", value: "短毛貓" },
+                    { text: "B. 靜謐的鄉村", value: "英國短毛貓" },
+                    { text: "C. 自然的森林", value: "緬因貓" },
+                    { text: "D. 舒適的家中", value: "波斯貓" },
+                    { text: "E. 變化的旅途", value: "俄羅斯藍貓" }
+                ],
+                hint: "選擇你最喜歡的環境。"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let answers = [];
+        let userInfo = {};
+        let maxBreed = [];
+
+        function startQuiz() {
+            // 獲取使用者資訊
+            const userName = document.getElementById('userName').value.trim();
+            const userBirthday = document.getElementById('userBirthday').value.trim();
+            const userEmail = document.getElementById('userEmail').value.trim();
+            const userPhone = document.getElementById('userPhone').value.trim();
+            const catNumber = document.getElementById('catNumber').value.trim();
+            const catSource = document.getElementById('catSource').value.trim();
+
+            if (!userName || !userBirthday || !userEmail || !userPhone || !catNumber || !catSource) {
+                alert('請完整填寫所有資訊！');
+                return;
+            }
+
+            userInfo = {
+                name: userName,
+                birthday: userBirthday,
+                email: userEmail,
+                phone: userPhone,
+                catNumber: catNumber,
+                catSource: catSource
+            };
+
+            document.getElementById('user-info').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showQuestion(index) {
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = '';
+
+            if (index < questions.length) {
+                const questionData = questions[index];
+
+                const questionElement = document.createElement('h2');
+                questionElement.textContent = questionData.question;
+                questionContainer.appendChild(questionElement);
+
+                const hintElement = document.createElement('p');
+                hintElement.className = 'hint';
+                hintElement.textContent = questionData.hint;
+                questionContainer.appendChild(hintElement);
+
+                questionData.options.forEach(option => {
+                    const label = document.createElement('label');
+                    label.className = 'option-label';
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'q' + (index + 1);
+                    radio.value = option.value;
+                    radio.checked = answers[index] === option.value;
+
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(option.text));
+                    questionContainer.appendChild(label);
+                });
+            }
+            updateProgressBar();
+            updateButtons();
+        }
+
+        function nextQuestion() {
+            if (saveAnswer()) {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    showQuestion(currentQuestionIndex);
+                } else {
+                    currentQuestionIndex = questions.length - 1;
+                    updateProgressBar();
+                    updateButtons();
+                }
+            } else {
+                alert('請選擇一個選項！');
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                saveAnswer();
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        function saveAnswer() {
+            const radios = document.getElementsByName('q' + (currentQuestionIndex + 1));
+            for (let radio of radios) {
+                if (radio.checked) {
+                    answers[currentQuestionIndex] = radio.value;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function updateProgressBar() {
+            const progress = document.getElementById('progress');
+            const percentage = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progress.style.width = percentage + '%';
+        }
+
+        function updateButtons() {
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const submitButton = document.getElementById('submitButton');
+
+            prevButton.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
+
+            if (currentQuestionIndex >= questions.length - 1) {
+                nextButton.style.display = 'none';
+                submitButton.style.display = 'inline-block';
+            } else {
+                nextButton.style.display = 'inline-block';
+                submitButton.style.display = 'none';
+            }
+        }
+
+        function calculateResult() {
+            if (!saveAnswer()) {
+                alert('請選擇一個選項！');
+                return;
+            }
+
+            const catBreeds = {
+                '短毛貓': 0,
+                '波斯貓': 0,
+                '英國短毛貓': 0,
+                '緬因貓': 0,
+                '俄羅斯藍貓': 0
+            };
+
+            answers.forEach(value => {
+                catBreeds[value]++;
+            });
+
+            // 找出得分最高的貓咪品種
+            let maxScore = 0;
+            maxBreed = [];
+            for (let breed in catBreeds) {
+                if (catBreeds[breed] > maxScore) {
+                    maxScore = catBreeds[breed];
+                    maxBreed = [breed];
+                } else if (catBreeds[breed] === maxScore) {
+                    maxBreed.push(breed);
+                }
+            }
+
+            const breedDescriptions = {
+                '短毛貓': {
+                    personality: '活潑好動，喜歡探索新的事物，充滿好奇心。',
+                    fortune: '近期會有新的機會出現，適合主動出擊。',
+                    advice: '保持積極的態度，多嘗試不同的挑戰。'
+                },
+                '波斯貓': {
+                    personality: '溫順安靜，喜歡享受生活，具有藝術氣息。',
+                    fortune: '適合放慢腳步，享受當下，可能會有意外的驚喜。',
+                    advice: '多關注內心的聲音，培養自己的興趣愛好。'
+                },
+                '英國短毛貓': {
+                    personality: '穩重可靠，善於與人相處，具有領導才能。',
+                    fortune: '在工作和人際關係上有不錯的發展機會。',
+                    advice: '發揮你的溝通能力，建立良好的人際網絡。'
+                },
+                '緬因貓': {
+                    personality: '獨立自主，喜歡挑戰，具有冒險精神。',
+                    fortune: '可能會面臨一些挑戰，但也是成長的機會。',
+                    advice: '勇敢面對困難，相信自己的能力。'
+                },
+                '俄羅斯藍貓': {
+                    personality: '神秘冷靜，內心豐富，善於思考。',
+                    fortune: '適合學習新知識，提升自我，可能會有貴人相助。',
+                    advice: '多與他人交流，分享你的想法，拓展視野。'
+                }
+            };
+
+            let resultMessage = `${userInfo.name}，根據你的選擇，你的幸運貓咪是<strong>${maxBreed.join('、')}</strong>！`;
+
+            maxBreed.forEach(breed => {
+                const info = breedDescriptions[breed];
+                resultMessage += `
+                    <h3>${breed}</h3>
+                    <p>個性特質：${info.personality}</p>
+                    <p>運勢：${info.fortune}</p>
+                    <p>建議：${info.advice}</p>
+                `;
+            });
+
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('result-content');
+
+            resultContent.innerHTML = `
+                <p>${resultMessage}</p>
+            `;
+
+            // 在這裡將資料匯入Google試算表
+            fetch('https://script.google.com/macros/s/AKfycbwlz_MUIXfrWgvoYXWKBoqvamOBprNIHPr9uO4GeAu3n5rlSveGJc5L3znpcdcPsiad5w/exec', {
+                method: 'POST',
+                mode: 'no-cors', // 如果遇到CORS問題，可以使用no-cors模式
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: userInfo.name,
+                    birthday: userInfo.birthday,
+                    email: userInfo.email,
+                    phone: userInfo.phone,
+                    catNumber: userInfo.catNumber,
+                    catSource: userInfo.catSource,
+                    result: maxBreed.join('、')
+                })
+            })
+            .then(response => {
+                console.log('資料已匯入試算表');
+            })
+            .catch(error => {
+                console.error('匯入資料時發生錯誤', error);
+            });
+
+            resultDiv.style.display = 'block';
+            document.getElementById('quiz').style.display = 'none';
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            answers = [];
+            userInfo = {};
+            maxBreed = [];
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('user-info').style.display = 'block';
+
+            // 重置表單
+            document.getElementById('userInfoForm').reset();
+        }
+
+        function shareResult() {
+            const shareText = `${userInfo.name} 的幸運貓咪是 ${maxBreed.join('、')}！快來測測你的幸運貓咪吧！`;
+            const shareUrl = window.location.href;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: '喵大師來開運',
+                    text: shareText,
+                    url: shareUrl
+                }).then(() => {
+                    console.log('結果已分享');
+                }).catch((error) => {
+                    console.error('分享失敗', error);
+                });
+            } else {
+                // 如果不支援 Web Share API，則生成一個可複製的連結
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = `${shareText} ${shareUrl}`;
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('分享內容已複製到剪貼簿，快去分享給朋友吧！');
+            }
+        }
+
+        function shareTest() {
+            const shareText = `快來參加「喵大師來開運」測驗，發現你的幸運貓咪吧！`;
+            const shareUrl = window.location.href;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: '喵大師來開運',
+                    text: shareText,
+                    url: shareUrl
+                }).then(() => {
+                    console.log('測驗已分享');
+                }).catch((error) => {
+                    console.error('分享失敗', error);
+                });
+            } else {
+                // 如果不支援 Web Share API，則生成一個可複製的連結
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = `${shareText} ${shareUrl}`;
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('分享內容已複製到剪貼簿，快去分享給朋友吧！');
+            }
+        }
+    </script>
+</body>
+</html>
